@@ -1,1 +1,1 @@
-# imperial-aiml-capstone
+# Imperial-AIML-capstone
