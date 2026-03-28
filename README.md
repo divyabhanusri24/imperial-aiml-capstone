@@ -22,6 +22,14 @@ The goal is to find the input that maximises the output of each
 function through intelligent, iterative, data-driven decisions — 
 reflecting how optimisation is approached in real-world ML research.
 
+## 🗓️ Module Progress
+| Module | Week | Status | Strategy Used |
+|---|---|---|---|
+| Module 12 | Week 1 | ✅ Complete | GP + UCB (adaptive beta) |
+| Module 13 | Week 2 | ⏳ Coming soon | TBD |
+| Module 14 | Week 3 | ⏳ Coming soon | TBD |
+| Module 15 | Week 4 | ⏳ Coming soon | TBD |
+
 ## ❓ Problem Statement
 Eight synthetic black-box functions are provided, each simulating 
 a real-world optimisation challenge such as radiation detection, 
@@ -58,13 +66,6 @@ The primary objectives of this analysis are:
 | **Models** | Gaussian Process and other surrogate models |
 | **Tools** | Jupyter Notebooks, Git, GitHub |
 
-## 🗓️ Module Progress
-| Module | Week | Status | Strategy Used |
-|---|---|---|---|
-| Module 12 | Week 1 | ✅ Complete | GP + UCB (adaptive beta) |
-| Module 13 | Week 2 | ⏳ Coming soon | TBD |
-| Module 14 | Week 3 | ⏳ Coming soon | TBD |
-| Module 15 | Week 4 | ⏳ Coming soon | TBD |
 
 ## 📁 Repository Structure
 ```
