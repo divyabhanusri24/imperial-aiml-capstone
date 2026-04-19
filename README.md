@@ -69,66 +69,84 @@ Example (4D function): `0.241041-0.805036-0.948951-0.905090`
 |--------|------|--------|---------------|--------|
 | Module 12 | Week 1 | ✅ Complete | GP + UCB (adaptive beta), Matérn/RBF kernels, grid + random search | 6/8 functions improved |
 | Module 13 | Week 2 | ✅ Complete | GP + UCB with log transforms, adaptive beta per function | 1/8 functions improved |
-| Module 14 | Week 3 | ✅ Complete | GP + UCB (corrected strategy) + SVM region classification | Awaiting results |
-| Module 15 | Week 4 | 🔜 Coming Soon | TBD | TBD |
+| Module 14 | Week 3 | ✅ Complete | GP + UCB + SVM region classification | 0/8 improved — full regression |
+| Module 15 | Week 4 | ✅ Complete | GP + UCB + EI ensemble, trust regions, 50k candidates, outlier removal | Submitted |
+| Module 16 | Week 5 | 🔜 Coming Soon | TBD | TBD |
 
 ### 🔑 Key Insight After Week 2
 
-After Week 2, I confirmed that the goal is **maximisation** (higher output = better). This reversed my interpretation of several results — what I thought was an improvement for F4 (going to -26.59) was actually a disaster, while F5's output of 1450 was my best result across all functions. This discovery led to a complete restructuring of my Week 3 strategy.
+After Week 2, I confirmed that the goal is **maximisation** (higher output = better). This reversed my interpretation of several results — what I thought was an improvement for F4 (going to -26.59) was actually a disaster, while F5's output of 1450 was my best result across all functions.
+
+### ⚠️ Week 3 Post-Mortem — Full Regression
+
+Week 3 introduced SVM classification on only 12 data points. This backfired — all 8 functions regressed. High beta values combined with an unreliable SVM sent every query toward high-uncertainty unexplored regions instead of proven-good neighbourhoods.
+
+| Function | Best Before W3 | W3 Result | Verdict |
+|----------|---------------|-----------|---------|
+| F1 | 2.82e-04 (W2) | 2.67e-174 | Catastrophic |
+| F2 | 0.171 (W2) | -0.043 | Went negative |
+| F3 | -0.011 (W1) | -0.184 | Regression |
+| F4 | -0.346 (W1) | -26.07 | Disaster continues |
+| F5 | 1450.94 (W1) | 1192.30 | Regression + duplicate query |
+| F6 | -0.361 (W1) | -2.509 | Getting worse each week |
+| F7 | 1.406 (W1) | 1.253 | Regression |
+| F8 | 9.892 (W1) | 7.579 | Regression |
+
+> **W1 holds the best result for 6/8 functions. W2 is best for F1 and F2.**
 
 ---
 
 ## 🔬 Strategy & Approach
 
 ### Core Method
-- **Surrogate Model:** Gaussian Process (GP) Regression
-- **Acquisition Function:** Upper Confidence Bound (UCB)
-- **Kernels:** Matérn and RBF (selected per function)
+- **Surrogate Model:** Gaussian Process (GP) Regression with Matérn kernel (ν=2.5)
+- **Acquisition Functions:** Upper Confidence Bound (UCB) + Expected Improvement (EI) — ensemble
 - **Beta Tuning:** Adaptive per-function beta values to balance exploration vs exploitation
+- **Trust Regions:** Constrain search to neighbourhood of best known point (Week 4+)
 
 ### Key Techniques
 - Log transforms for functions with extreme output ranges
-- Grid search for low-dimensional functions (2D–3D)
-- Random search for higher-dimensional functions (4D–8D)
-- Trust region checks to verify query points stay near best known regions
-- Boundary avoidance (values near 0.0 or 1.0 tend to perform poorly)
+- Grid search for low-dimensional functions (2D), LHS for higher-dimensional (3D–8D)
+- 50,000 candidate points per function (Week 4+) for better search coverage
+- Trust regions to prevent over-exploration after regressions
+- Boundary clipping to [0.02, 0.98] — corner points consistently perform poorly
+- Duplicate check to prevent resubmitting previously queried points
+- Outlier removal before GP fit for disaster-affected functions (F4)
 - Weekly iteration: analyse results → adjust strategy → submit new points
 
-### 🆕 Week 3 Addition: SVM Region Classification
+---
 
-In Week 3, I introduced **Support Vector Machines** as a supplementary analysis tool:
+### 🆕 Week 4 Improvements
 
-- **Soft-margin SVM with RBF kernel** classifies observed points as high-performing vs low-performing
-- Uses median output as the classification threshold
-- Feature means comparison reveals which input dimensions tend to produce higher outputs
-- SVM serves as a **supporting tool for region identification**, complementing the GP surrogate
-- With 12 data points per function, SVM classification is exploratory but becomes more reliable as data grows
+| Fix | Detail |
+|-----|--------|
+| **UCB + EI Ensemble** | Both acquisition functions computed; candidate with higher GP posterior mean selected |
+| **Trust regions** | Search constrained to radius r around best known X — prevents W3-style overexploration |
+| **50,000 candidates** | Up from 5–10k; better coverage especially for high-dimensional functions |
+| **Boundary clip 0.02–0.98** | Removed corner-point bias present in W1–W3 |
+| **F4 outlier removal** | W2 (−26.59) and W3 (−26.07) stripped before GP fit to avoid corrupting the model |
+| **F5 manual fine-tune** | 50,000 micro-perturbations (±0.04) around W1 best [0.241, 0.805, 0.949, 0.905] |
+| **Duplicate check** | Auto-perturbs query if too close (< 0.015) to any prior submission |
 
-### Per-Function Strategy (Week 3)
+### Per-Function Strategy Summary (Week 4)
 
-| Function | Best Result | Best Week | Beta | Strategy |
-|----------|-----------|-----------|------|----------|
-| F1 | 2.82e-04 | W2 | 3.5 | Explore — both weeks near zero |
-| F2 | 0.171 | W2 | 2.5 | GP-UCB explore near W2 region |
-| F3 | -0.011 | W1 | 2.0 | Fine-tune W1 point |
-| F4 | -0.346 | W1 | 3.0 | Reverse correction — W2 disaster recovery |
-| F5 | **1450.94** | **W1 ⭐** | 0.3 | Exploit heavily — STAR performer |
-| F6 | -0.361 | W1 | 2.0 | Fine-tune W1 region |
-| F7 | 1.406 | W1 | 2.5 | GP-UCB explore more |
-| F8 | 9.892 | W1 | 2.0 | GP-UCB balanced |
-
-### Exploration vs Exploitation Balance
-
-The balance varies per function and evolves weekly:
-- **Heavy exploitation** for strong performers (F5: beta=0.3)
-- **Heavy exploration** for stagnating functions (F1: beta=3.5, F4: beta=3.0)
-- **Balanced approach** for steady progress functions (F3, F6, F8: beta=2.0)
+| Function | All-time Best | Beta | Trust Radius | Mode |
+|----------|-------------|------|-------------|------|
+| F1 | 2.82e-04 (W2) | 3.5 | None | Wide explore — still near zero |
+| F2 | 0.611 (initial) | 1.5 | 0.20 | Trust + EI — return to best region |
+| F3 | -0.011 (W1) | 1.5 | 0.20 | Trust + EI — return to W1 region |
+| F4 | -0.346 (W1) | 3.5 | None | Wide LHS + outlier removal |
+| F5 | **1450.94 (W1) ⭐** | 0.15 | 0.08 | Tight exploit + manual fine-tune |
+| F6 | -0.361 (W1) | 1.5 | 0.20 | Trust + EI — return to W1 region |
+| F7 | 1.406 (W1) | 2.0 | 0.25 | Trust + EI — steer back to W1 |
+| F8 | 9.892 (W1) | 2.0 | 0.25 | Trust + EI — steer back to W1 |
 
 ### 📝 Lessons Learned
 
 - **Week 1:** Broad exploration works well initially — 6/8 improved
-- **Week 2:** Aggressive model-driven queries can backfire (F4: -0.35 → -26.59)
-- **Week 3:** Understanding the objective (maximise vs minimise) is fundamental — always verify assumptions before iterating
+- **Week 2:** Aggressive model-driven queries can backfire (F4: −0.35 → −26.59)
+- **Week 3:** High beta + unreliable SVM on 12 pts = overexploration disaster — 0/8 improved
+- **Week 4:** Trust regions are essential after regression; EI more disciplined than UCB alone; always check for duplicate submissions
 
 ---
 
@@ -138,20 +156,27 @@ The balance varies per function and evolves weekly:
 |----------|-------------|
 | Language | Python |
 | Libraries | NumPy, Matplotlib, Scikit-Learn, SciPy |
-| Models | Gaussian Process, SVM (SVC with RBF kernel) |
+| Models | Gaussian Process (Matérn), SVM (SVC with RBF kernel) |
+| Sampling | Latin Hypercube Sampling (scipy.stats.qmc) |
 | Tools | Jupyter Notebooks, Git, GitHub |
 
 ---
 
 ## 📁 Repository Structure
+
 ```
 imperial-aiml-capstone/
 │
 ├── README.md
 │
+├── data/
+│   ├── function_1/   (initial_inputs.npy, initial_outputs.npy)
+│   ├── function_2/
+│   └── ... (function_3 through function_8)
+│
 ├── module-12/
 │   ├── notebooks/
-│   │   └── Module_12_Bayesian_Optimisation.ipynb
+│   │   └── Module_12_Bayesian_Optimisation_Capstone.ipynb
 │   └── plots/
 │
 ├── module-13/
@@ -163,6 +188,12 @@ imperial-aiml-capstone/
 │   ├── notebooks/
 │   │   └── Module_14_Week3_Capstone.ipynb
 │   └── plots/
+│
+├── module-15/
+│   ├── notebooks/
+│   │   └── Module_15_Week4_Capstone.ipynb
+│   └── plots/
+│       └── w3_regression_analysis.png
 │
 └── ...
 ```
@@ -183,7 +214,7 @@ pip install numpy matplotlib scikit-learn scipy
 
 3. Open the latest notebook:
 ```bash
-jupyter notebook module-14/notebooks/Module_14_Week3_Capstone.ipynb
+jupyter notebook module-15/notebooks/Module_15_Week4_Capstone.ipynb
 ```
 
 ---
