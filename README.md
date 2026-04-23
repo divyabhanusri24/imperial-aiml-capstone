@@ -70,12 +70,27 @@ Example (4D function): `0.241041-0.805036-0.948951-0.905090`
 | Module 12 | Week 1 | ✅ Complete | GP + UCB (adaptive beta), Matérn/RBF kernels, grid + random search | 6/8 functions improved |
 | Module 13 | Week 2 | ✅ Complete | GP + UCB with log transforms, adaptive beta per function | 1/8 functions improved |
 | Module 14 | Week 3 | ✅ Complete | GP + UCB + SVM region classification | 0/8 improved — full regression |
-| Module 15 | Week 4 | ✅ Complete | GP + UCB + EI ensemble, trust regions, 50k candidates, outlier removal | Submitted |
-| Module 16 | Week 5 | 🔜 Coming Soon | TBD | TBD |
+| Module 15 | Week 4 | ✅ Complete | GP + UCB + EI ensemble, trust regions, 50k candidates, outlier removal | 4/8 improved (F4, F5, F7, F8) |
+| Module 16 | Week 5 | ✅ Complete | Trust regions anchored to all-time best points, dual-strategy F6, tightest exploit on F5 | Submitted |
 
 ### 🔑 Key Insight After Week 2
 
 After Week 2, I confirmed that the goal is **maximisation** (higher output = better). This reversed my interpretation of several results — what I thought was an improvement for F4 (going to -26.59) was actually a disaster, while F5's output of 1450 was my best result across all functions.
+
+### 📈 Week 4 Results — Best Week Since Week 1
+
+4/8 functions improved. Trust regions and outlier removal paid off.
+
+| Function | Best Before W4 | W4 Result | Verdict |
+|----------|---------------|-----------|---------|
+| F1 | 2.82e-04 (W2) | -2.66e-133 | Catastrophic — wide explore failed again |
+| F2 | 0.611 (initial) | 0.147 | Regression — drifted from initial best |
+| F3 | -0.011 (W1) | -0.022 | Regression |
+| F4 | -0.346 (W1) | **-0.128** | First ever improvement! Outlier removal worked |
+| F5 | 1450.94 (W1) | **2496.35** | Massive +72% gain — tight trust region |
+| F6 | -0.361 (W1) | -0.386 | Slight regression |
+| F7 | 1.406 (W1) | **2.671** | Nearly doubled — trust region worked |
+| F8 | 9.892 (W1) | **9.897** | Small improvement |
 
 ### ⚠️ Week 3 Post-Mortem — Full Regression
 
@@ -128,6 +143,31 @@ Week 3 introduced SVM classification on only 12 data points. This backfired — 
 | **F5 manual fine-tune** | 50,000 micro-perturbations (±0.04) around W1 best [0.241, 0.805, 0.949, 0.905] |
 | **Duplicate check** | Auto-perturbs query if too close (< 0.015) to any prior submission |
 
+### 🆕 Week 5 Improvements
+
+| Fix | Detail |
+|-----|--------|
+| **Anchor to all-time best** | Trust center set explicitly to best known X (not just GP best) |
+| **F1 locked to W2 point** | Stop exploring — tight r=0.10 around [0.591, 0.591] that gave 2.82e-04 |
+| **F2 anchored to initial** | Return to initial data point [0.703, 0.927] that gave 0.611 |
+| **F5 tightest ever** | r=0.05, beta=0.05 — maximum exploitation of 2496 peak |
+| **F6 dual strategy** | Wide LHS vs W1 trust region — GP mean selected W1 trust region |
+| **F7/F8 tightened** | Radii reduced after W4 improvements confirmed |
+| **W4 added to history** | All 4 weekly submissions now tracked for duplicate check |
+
+### Per-Function Strategy Summary (Week 5)
+
+| Function | All-time Best | Beta | Trust Radius | Mode |
+|----------|-------------|------|-------------|------|
+| F1 | 2.82e-04 (W2) | 1.0 | 0.10 on W2 point | Lock onto W2 — stop exploring |
+| F2 | 0.611 (initial) | 0.5 | 0.15 on initial best | Return to origin of 0.611 |
+| F3 | -0.011 (W1) | 1.0 | 0.12 on W1 | Tighter than W4 |
+| F4 | -0.128 (W4) | 1.5 | 0.20 on W4 | Exploit first improvement |
+| F5 | **2496.35 (W4) ⭐** | 0.05 | 0.05 on W4 | Maximum exploitation |
+| F6 | -0.361 (W1) | 1.5 | 0.18 on W1 | W1 trust won dual-strategy test |
+| F7 | 2.671 (W4) | 1.2 | 0.18 on W4 | Tighten after W4 success |
+| F8 | 9.897 (W4) | 1.5 | 0.30 on W4 | Slightly wider for 8D gains |
+
 ### Per-Function Strategy Summary (Week 4)
 
 | Function | All-time Best | Beta | Trust Radius | Mode |
@@ -147,6 +187,7 @@ Week 3 introduced SVM classification on only 12 data points. This backfired — 
 - **Week 2:** Aggressive model-driven queries can backfire (F4: −0.35 → −26.59)
 - **Week 3:** High beta + unreliable SVM on 12 pts = overexploration disaster — 0/8 improved
 - **Week 4:** Trust regions are essential after regression; EI more disciplined than UCB alone; always check for duplicate submissions
+- **Week 5:** Anchor trust center explicitly to all-time best X, not just GP best; dual-strategy comparison useful for stuck functions; tighter radius = more gain once you know the good region
 
 ---
 
@@ -195,6 +236,12 @@ imperial-aiml-capstone/
 │   └── plots/
 │       └── w3_regression_analysis.png
 │
+├── module-16/
+│   ├── notebooks/
+│   │   └── Module_16_Week5_Capstone.ipynb
+│   └── plots/
+│       └── w4_progress_analysis.png
+│
 └── ...
 ```
 
@@ -214,7 +261,7 @@ pip install numpy matplotlib scikit-learn scipy
 
 3. Open the latest notebook:
 ```bash
-jupyter notebook module-15/notebooks/Module_15_Week4_Capstone.ipynb
+jupyter notebook module-16/notebooks/Module_16_Week5_Capstone.ipynb
 ```
 
 ---
