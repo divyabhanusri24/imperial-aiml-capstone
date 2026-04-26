@@ -73,37 +73,18 @@ Example (4D function): `0.241041-0.805036-0.948951-0.905090`
 | Module 15 | Week 4 | ✅ Complete | GP + UCB + EI ensemble, trust regions, 50k candidates, outlier removal | 4/8 improved (F4, F5, F7, F8) |
 | Module 16 | Week 5 | ✅ Complete | Trust regions anchored to all-time best points, dual-strategy F6, tightest exploit on F5 | Submitted |
 
-### 📈 Week 4 Results — Best Week Since Week 1
+### 🏆 All-Time Best Results (after Week 5)
 
-4/8 functions improved. Trust regions and outlier removal paid off.
-
-| Function | Best Before W4 | W4 Result | Verdict |
-|----------|---------------|-----------|---------|
-| F1 | 2.82e-04 (W2) | -2.66e-133 | Catastrophic — wide explore failed again |
-| F2 | 0.611 (initial) | 0.147 | Regression — drifted from initial best |
-| F3 | -0.011 (W1) | -0.022 | Regression |
-| F4 | -0.346 (W1) | **-0.128** | First ever improvement! Outlier removal worked |
-| F5 | 1450.94 (W1) | **2496.35** | Massive +72% gain — tight trust region |
-| F6 | -0.361 (W1) | -0.386 | Slight regression |
-| F7 | 1.406 (W1) | **2.671** | Nearly doubled — trust region worked |
-| F8 | 9.892 (W1) | **9.897** | Small improvement |
-
-### ⚠️ Week 3 Post-Mortem — Full Regression
-
-Week 3 introduced SVM classification on only 12 data points. This backfired — all 8 functions regressed. High beta values combined with an unreliable SVM sent every query toward high-uncertainty unexplored regions instead of proven-good neighbourhoods.
-
-| Function | Best Before W3 | W3 Result | Verdict |
-|----------|---------------|-----------|---------|
-| F1 | 2.82e-04 (W2) | 2.67e-174 | Catastrophic |
-| F2 | 0.171 (W2) | -0.043 | Went negative |
-| F3 | -0.011 (W1) | -0.184 | Regression |
-| F4 | -0.346 (W1) | -26.07 | Disaster continues |
-| F5 | 1450.94 (W1) | 1192.30 | Regression + duplicate query |
-| F6 | -0.361 (W1) | -2.509 | Getting worse each week |
-| F7 | 1.406 (W1) | 1.253 | Regression |
-| F8 | 9.892 (W1) | 7.579 | Regression |
-
-> **W1 holds the best result for 6/8 functions. W2 is best for F1 and F2.**
+| Function | Best Result | Best Week |
+|----------|-------------|-----------|
+| F1 | 2.82e-04 | Week 2 |
+| F2 | 0.611 | Initial data |
+| F3 | -0.011 | Week 1 |
+| F4 | -0.128 | Week 4 |
+| F5 | **2496.35** | Week 4 |
+| F6 | -0.361 | Week 1 |
+| F7 | **2.671** | Week 4 |
+| F8 | 9.897 | Week 4 |
 
 ---
 
@@ -176,19 +157,6 @@ Each weekly notebook runs all 8 functions through a single parameterised functio
 | F6 | -0.361 (W1) | 1.5 | 0.18 on W1 | W1 trust won dual-strategy test |
 | F7 | 2.671 (W4) | 1.2 | 0.18 on W4 | Tighten after W4 success |
 | F8 | 9.897 (W4) | 1.5 | 0.30 on W4 | Slightly wider for 8D gains |
-
-### Per-Function Strategy Summary (Week 4)
-
-| Function | All-time Best | Beta | Trust Radius | Mode |
-|----------|-------------|------|-------------|------|
-| F1 | 2.82e-04 (W2) | 3.5 | None | Wide explore — still near zero |
-| F2 | 0.611 (initial) | 1.5 | 0.20 | Trust + EI — return to best region |
-| F3 | -0.011 (W1) | 1.5 | 0.20 | Trust + EI — return to W1 region |
-| F4 | -0.346 (W1) | 3.5 | None | Wide LHS + outlier removal |
-| F5 | **1450.94 (W1) ⭐** | 0.15 | 0.08 | Tight exploit + manual fine-tune |
-| F6 | -0.361 (W1) | 1.5 | 0.20 | Trust + EI — return to W1 region |
-| F7 | 1.406 (W1) | 2.0 | 0.25 | Trust + EI — steer back to W1 |
-| F8 | 9.892 (W1) | 2.0 | 0.25 | Trust + EI — steer back to W1 |
 
 ### 📝 Lessons Learned
 
