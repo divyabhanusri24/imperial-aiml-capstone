@@ -115,6 +115,19 @@ Week 3 introduced SVM classification on only 12 data points. This backfired — 
 - **Beta Tuning:** Adaptive per-function beta values to balance exploration vs exploitation
 - **Trust Regions:** Constrain search to neighbourhood of best known point (Week 4+)
 
+### 🔄 How the Pipeline Works
+
+Each weekly notebook runs all 8 functions through a single parameterised function (`analyse_function_w5`), keeping the entire strategy in one file rather than separate notebooks per function. The core loop per function:
+
+1. **Load data** — stack initial `.npy` observations with all weekly submissions and results
+2. **Log-transform outputs** — stabilise GP fitting across extreme output ranges (e.g. F5 at 2496 vs F1 at 2.82e-04)
+3. **Build candidate grid** — 50,000 LHS points, optionally constrained to a trust region around the best known X
+4. **Fit GP** — Matérn kernel (ν=2.5), `normalize_y=True`, 3 restarts
+5. **Score candidates** — compute UCB and EI across all candidates
+6. **Ensemble selection** — pick the candidate with the higher GP posterior mean between UCB and EI winners
+7. **Duplicate check** — auto-perturb if the selected point is within 0.015 of any prior submission
+8. **Output** — portal submission string in `x1-x2-...-xn` format
+
 ### Key Techniques
 - Log transforms for functions with extreme output ranges
 - Grid search for low-dimensional functions (2D), LHS for higher-dimensional (3D–8D)
