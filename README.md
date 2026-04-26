@@ -73,7 +73,7 @@ Example (4D function): `0.241041-0.805036-0.948951-0.905090`
 | Module 15 | Week 4 | ✅ Complete | GP + UCB + EI ensemble, trust regions, 50k candidates, outlier removal | 4/8 improved (F4, F5, F7, F8) |
 | Module 16 | Week 5 | ✅ Complete | Trust regions anchored to all-time best points, dual-strategy F6, tightest exploit on F5 | Submitted |
 
-### 🏆 All-Time Best Results (after Week 5)
+### 🏆 All-Time Best Results (after Week 4)
 
 | Function | Best Result | Best Week |
 |----------|-------------|-----------|
