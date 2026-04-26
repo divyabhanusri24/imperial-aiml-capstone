@@ -73,10 +73,6 @@ Example (4D function): `0.241041-0.805036-0.948951-0.905090`
 | Module 15 | Week 4 | ✅ Complete | GP + UCB + EI ensemble, trust regions, 50k candidates, outlier removal | 4/8 improved (F4, F5, F7, F8) |
 | Module 16 | Week 5 | ✅ Complete | Trust regions anchored to all-time best points, dual-strategy F6, tightest exploit on F5 | Submitted |
 
-### 🔑 Key Insight After Week 2
-
-After Week 2, I confirmed that the goal is **maximisation** (higher output = better). This reversed my interpretation of several results — what I thought was an improvement for F4 (going to -26.59) was actually a disaster, while F5's output of 1450 was my best result across all functions.
-
 ### 📈 Week 4 Results — Best Week Since Week 1
 
 4/8 functions improved. Trust regions and outlier removal paid off.
