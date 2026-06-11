@@ -1,0 +1,12 @@
+# Internal planning & session files — keep local only
+CLAUDE.md
+PROGRESS_TRACKER.md
+WEEKLY_PROMPT.md
+push.sh
+push_to_github.py
+
+# System
+.DS_Store
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
