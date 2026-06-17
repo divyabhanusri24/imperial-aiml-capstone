@@ -6,6 +6,15 @@
 ![Modules](https://img.shields.io/badge/Modules-12--24-purple)
 ![Week](https://img.shields.io/badge/Current-Week%209-orange)
 
+## 📋 Documentation
+
+| Document | Description |
+|----------|-------------|
+| [DATASHEET.md](DATASHEET.md) | Dataset documentation — composition, collection process, preprocessing and intended uses |
+| [MODEL_CARD.md](MODEL_CARD.md) | Model card — GP-BBO approach, strategy evolution, performance and limitations |
+
+---
+
 ## 📄 Overview
 
 This project is the Capstone requirement for the **Imperial College AI/ML Programme**, running from Module 12 through to Module 24.
