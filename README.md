@@ -4,7 +4,7 @@
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![Type](https://img.shields.io/badge/Type-Capstone-green)
 ![Modules](https://img.shields.io/badge/Modules-12--24-purple)
-![Week](https://img.shields.io/badge/Current-Week%2012-orange)
+![Week](https://img.shields.io/badge/Current-Week%2013%20FINAL-orange)
 
 ## 📋 Documentation
 
@@ -88,12 +88,12 @@ Example (4D function): `0.241041-0.805036-0.948951-0.905090`
 | Module 20 | Week 9 | ✅ Complete | Tight trust regions, F5 ridge momentum, F1 narrow-spike anchor | 3/8 improved (F1 ⭐, F5 ⭐, F7 ⭐) |
 | Module 21 | Week 10 | ✅ Complete | Ultra-tight exploit for F7/F8, F5 ridge micro-refinement | 2/8 improved (F7 ⭐, F8 ⭐) |
 | Module 22 | Week 11 | ✅ Complete | Per-function momentum/recovery, manual overrides vs GP drift | 2/8 improved (F7 ⭐, F8 ⭐) |
-| Module 23 | Week 12 | 🔄 Submitted | W11 bests as anchors, F5 ridge return to x1=0.027, F7/F8 momentum | Awaiting results |
-| Module 24 | Week 13 | ⏳ Final | — | — |
+| Module 23 | Week 12 | ✅ Complete | W11 bests as anchors, F5 ridge return, F7/F8 momentum | 1/8 improved (F8 ⭐ 9.9799) |
+| Module 24 | Week 13 | 🔄 Submitted | FINAL: exploit confirmed bests, F7 x6 explore lower, F8 trend | Awaiting results |
 
 ---
 
-## 🏆 All-Time Best Results (after Week 11)
+## 🏆 All-Time Best Results (after Week 12)
 
 | Function | Best Result | Best Week | Notes |
 |----------|-------------|-----------|-------|
@@ -101,10 +101,10 @@ Example (4D function): `0.241041-0.805036-0.948951-0.905090`
 | F2 | 0.6478 | Week 6 | Very noisy — same coords gave 0.465 in W11 |
 | F3 | -0.0107 | Week 1 | Stuck — best result still from W1 |
 | F4 | -0.1284 | Week 4 | Volatile/non-stationary landscape |
-| F5 | **3651.37** ⭐ | **Week 9** | Ridge peak at x1=0.027; going lower made it worse |
-| F6 | -0.2037 | Week 8 | x5 must stay small (~0.020) |
-| F7 | **3.1034** ⭐ | **Week 11** | 6 consecutive improvements W6→W11 |
-| F8 | **9.9750** ⭐ | **Week 11** | Momentum W10→W11 confirmed |
+| F5 | **3651.37** ⭐ | **Week 9** | Ridge: x3 deviation to 0.963 in W12 caused 188-pt drop |
+| F6 | -0.2037 | Week 8 | x4=0.718, x5=0.020 confirmed critical |
+| F7 | 3.1034 | Week 11 | 6 consecutive improvements W6→W11 |
+| F8 | **9.9799** ⭐ | **Week 12** | New all-time best — momentum W10→W11→W12 |
 
 ---
 
@@ -265,17 +265,33 @@ Example (4D function): `0.241041-0.805036-0.948951-0.905090`
 
 ---
 
-### Week 12 (Module 23) — Submitted, Awaiting Results
+### Week 12 (Module 23) — Results in
+| F | Submission | Result | Note |
+|---|------------|--------|------|
+| F1 | 0.651500-0.670000 | -0.0029 ❌ | x2=0.670 crashed — spike confirmed narrow at x2=0.654 |
+| F2 | 0.704856-0.942000 | 0.5126 ❌ | x2=0.942 too high |
+| F3 | 0.020000-0.954000-0.475000 | -0.0523 ❌ | x2=0.954 too low |
+| F4 | 0.337655-0.667407-0.837231-0.628203 | -16.474 ❌ | W4 region still failing |
+| F5 | 0.027000-0.980000-0.963000-0.979000 | 3463.42 ❌ | x3=0.963 caused 188-pt drop |
+| F6 | 0.417095-0.367584-0.502073-0.701098-0.022008 | -0.3998 ❌ | x4=0.701 too low |
+| F7 | 0.242071-0.235871-0.349962-0.303448-0.305843-0.659759 | 3.0986 ❌ | x6=0.660 vs W11's 0.643 slightly worse |
+| F8 | 0.131852-0.171318-0.123876-0.228240-0.795114-0.554833-0.264222-0.564700 | **9.9799** ✅ | NEW ALL-TIME BEST |
+
+**1/8 improved (F8 ⭐)**
+
+---
+
+### Week 13 (Module 24) — FINAL — Submitted
 | F | Submission | Strategy |
 |---|------------|---------|
-| F1 | 0.651500-0.654000 | NEAR-EXACT — return to W9 best coords |
-| F2 | 0.704856-0.942000 | MOMENTUM — W6 x1 exact, x2 nudged to 0.942 |
-| F3 | 0.020000-0.954000-0.475000 | BOLD-EXPLORE — return to W1 x3=0.475 |
-| F4 | 0.337655-0.667407-0.837231-0.628203 | RECENT-GP — dynamic landscape model |
-| F5 | 0.027000-0.980000-0.963000-0.979000 | RIDGE — return to x1=0.027 peak |
-| F6 | 0.417095-0.367584-0.502073-0.701098-0.022008 | MOMENTUM — tight around W8 best |
-| F7 | 0.242071-0.235871-0.349962-0.303448-0.305843-0.659759 | MOMENTUM — continuing W11 best |
-| F8 | 0.131852-0.171318-0.123876-0.228240-0.795114-0.554833-0.264222-0.564700 | MOMENTUM — continuing W11 best |
+| F1 | 0.635000-0.654000 | x2=0.654 confirmed peak kept; x1 adjusted to clear duplicate |
+| F2 | 0.704856-0.921380 | W6 exact best — stochastic function, fresh draw at confirmed peak |
+| F3 | 0.050000-0.969910-0.474761 | x2/x3 at W1 best; x1 adjusted from 0.020584 |
+| F4 | 0.360000-0.500000-0.615000-0.480000 | W7/W8 midpoint (gave -4.94; best recent region) |
+| F5 | 0.027000-0.980000-0.979500-0.979000 | W9 exact best (3651.37) — x3 must stay at 0.9795 |
+| F6 | 0.409346-0.360704-0.520000-0.718263-0.020264 | W8 best; x3 adjusted, x4=0.718 and x5=0.020 preserved |
+| F7 | 0.235451-0.238127-0.353968-0.271570-0.299798-0.628000 | W11 best x1-x5; x6 lowered 0.643→0.628 to explore |
+| F8 | 0.159000-0.209000-0.127000-0.190000-0.775000-0.520000-0.299000-0.591000 | Trend from W12 new best — extrapolate W10→W11→W12 trajectory |
 
 ---
 
@@ -363,16 +379,16 @@ Each weekly notebook runs all 8 functions through a single parameterised functio
 
 ### Per-Function Strategy Summary (Week 12 — current)
 
-| Function | All-time Best | Beta | Trust Radius | Trust Center | Policy |
-|----------|-------------|------|-------------|-------------|--------|
-| F1 | **0.09715 (W9)** ⭐ | 0.5 | 0.03 | W9 best | NEAR-EXACT |
-| F2 | 0.6478 (W6) | 0.2 | 0.06 | W6 best (x1 exact) | MOMENTUM |
-| F3 | -0.0107 (W1) | 1.5 | 0.48 | Center [0.5,0.5,0.5] | BOLD-EXPLORE |
-| F4 | -0.1284 (W4) | 0.8 | 0.15 | W4 best | RECENT-GP |
-| F5 | **3651.37 (W9)** ⭐ | 0.02 | 0.02 | W9 best | RIDGE |
-| F6 | -0.2037 (W8) | 0.3 | 0.08 | W8 best | MOMENTUM |
-| F7 | **3.1034 (W11)** ⭐ | 0.5 | 0.08 | W11 best | MOMENTUM |
-| F8 | **9.9750 (W11)** ⭐ | 0.8 | 0.10 | W11 best | MOMENTUM |
+| Function | All-time Best | W13 Submission | Policy |
+|----------|-------------|---------------|--------|
+| F1 | **0.09715 (W9)** ⭐ | 0.635000-0.654000 | x2=0.654 kept; x1 shifted to clear duplicate |
+| F2 | 0.6478 (W6) | 0.704856-0.921380 | W6 exact — stochastic resampling |
+| F3 | -0.0107 (W1) | 0.050000-0.969910-0.474761 | W1 x2/x3 exact; x1 adjusted |
+| F4 | -0.1284 (W4) | 0.360000-0.500000-0.615000-0.480000 | W7/W8 best-recent region |
+| F5 | **3651.37 (W9)** ⭐ | 0.027000-0.980000-0.979500-0.979000 | W9 exact — lock in peak |
+| F6 | -0.2037 (W8) | 0.409346-0.360704-0.520000-0.718263-0.020264 | W8 best; x3 adjusted |
+| F7 | 3.1034 (W11) | 0.235451-0.238127-0.353968-0.271570-0.299798-0.628000 | W11 x1-x5; x6 explore lower |
+| F8 | **9.9799 (W12)** ⭐ | 0.159000-0.209000-0.127000-0.190000-0.775000-0.520000-0.299000-0.591000 | Trend continuation |
 
 ---
 
@@ -391,6 +407,8 @@ Each weekly notebook runs all 8 functions through a single parameterised functio
 | W9 | Verify GP suggestion direction against empirical trends — GP suggested decreasing x2 for F5; data said keep it at 0.979 |
 | W10 | F4 shows non-stationarity: same W4 coords gave −0.128 in W4 and −14.5 in W9. Use recent-only GP for non-stationary landscapes |
 | W11 | Manual overrides beat raw GP when empirical evidence is clear — F5 ridge peak at x1=0.027 outperformed GP's preference to push lower |
+| W12 | Ridge width: x3 deviation of just 0.016 (from 0.9795 to 0.963) caused 188-point drop in F5. Both x3 and x4 must stay at 0.979-0.980 on the ridge. |
+| W12 | x2 in F1 is an extremely narrow spike: x2=0.670 (Δ=+0.016 from optimal 0.654) crashed output from 0.097 to −0.003. Never deviate more than 0.001 in x2 for F1. |
 
 ---
 
