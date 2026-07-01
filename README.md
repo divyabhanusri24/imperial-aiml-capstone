@@ -1,10 +1,10 @@
 # 🚀 Bayesian Black-Box Optimisation — Capstone Project
 
-![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)
+![Status](https://img.shields.io/badge/Status-COMPLETE-brightgreen)
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![Type](https://img.shields.io/badge/Type-Capstone-green)
 ![Modules](https://img.shields.io/badge/Modules-12--24-purple)
-![Week](https://img.shields.io/badge/Current-Week%2013%20FINAL-orange)
+![Week](https://img.shields.io/badge/All%2013%20Weeks-Done-brightgreen)
 
 ## 📋 Documentation
 
@@ -89,22 +89,22 @@ Example (4D function): `0.241041-0.805036-0.948951-0.905090`
 | Module 21 | Week 10 | ✅ Complete | Ultra-tight exploit for F7/F8, F5 ridge micro-refinement | 2/8 improved (F7 ⭐, F8 ⭐) |
 | Module 22 | Week 11 | ✅ Complete | Per-function momentum/recovery, manual overrides vs GP drift | 2/8 improved (F7 ⭐, F8 ⭐) |
 | Module 23 | Week 12 | ✅ Complete | W11 bests as anchors, F5 ridge return, F7/F8 momentum | 1/8 improved (F8 ⭐ 9.9799) |
-| Module 24 | Week 13 | 🔄 Submitted | FINAL: exploit confirmed bests, F7 x6 explore lower, F8 trend | Awaiting results |
+| Module 24 | Week 13 | ✅ Complete | FINAL: score-weighted centroid (F4/F6/F7), F5 boundary push 0.990, F8 trend | 3/8 improved (F1 ⭐+246%, F5 ⭐+10.6%, F7 ⭐) |
 
 ---
 
-## 🏆 All-Time Best Results (after Week 12)
+## 🏆 All-Time Best Results — FINAL
 
 | Function | Best Result | Best Week | Notes |
 |----------|-------------|-----------|-------|
-| F1 | **0.09715** ⭐ | **Week 9** | Narrow spike — x2 must stay near 0.654 |
+| F1 | **0.33641** ⭐ | **Week 13** | x1=0.635 found true peak — 246% above previous best! |
 | F2 | 0.6478 | Week 6 | Very noisy — same coords gave 0.465 in W11 |
-| F3 | -0.0107 | Week 1 | Stuck — best result still from W1 |
-| F4 | -0.1284 | Week 4 | Volatile/non-stationary landscape |
-| F5 | **3651.37** ⭐ | **Week 9** | Ridge: x3 deviation to 0.963 in W12 caused 188-pt drop |
-| F6 | -0.2037 | Week 8 | x4=0.718, x5=0.020 confirmed critical |
-| F7 | 3.1034 | Week 11 | 6 consecutive improvements W6→W11 |
-| F8 | **9.9799** ⭐ | **Week 12** | New all-time best — momentum W10→W11→W12 |
+| F3 | -0.0107 | Week 1 | Stuck — best result still from W1 across all 13 weeks |
+| F4 | -0.1284 | Week 4 | Non-stationary; W13 score-weighted centroid gave -5.585 |
+| F5 | **4039.88** ⭐ | **Week 13** | Removed 0.98 boundary cap — +388 pts (+10.6%) |
+| F6 | -0.2037 | Week 8 | x4=0.718, x5=0.020 confirmed critical — never beaten |
+| F7 | **3.1050** ⭐ | **Week 13** | Score-weighted centroid clinched final new best |
+| F8 | 9.9799 | Week 12 | Trend extrapolation W10→W11→W12 — W13 just below |
 
 ---
 
@@ -281,17 +281,19 @@ Example (4D function): `0.241041-0.805036-0.948951-0.905090`
 
 ---
 
-### Week 13 (Module 24) — FINAL — Submitted
-| F | Submission | Strategy |
-|---|------------|---------|
-| F1 | 0.635000-0.654000 | x2=0.654 confirmed peak kept; x1 adjusted to clear duplicate |
-| F2 | 0.704856-0.921380 | W6 exact best — stochastic function, fresh draw at confirmed peak |
-| F3 | 0.050000-0.969910-0.474761 | x2/x3 at W1 best; x1 adjusted from 0.020584 |
-| F4 | 0.360000-0.500000-0.615000-0.480000 | W7/W8 midpoint (gave -4.94; best recent region) |
-| F5 | 0.027000-0.980000-0.979500-0.979000 | W9 exact best (3651.37) — x3 must stay at 0.9795 |
-| F6 | 0.409346-0.360704-0.520000-0.718263-0.020264 | W8 best; x3 adjusted, x4=0.718 and x5=0.020 preserved |
-| F7 | 0.235451-0.238127-0.353968-0.271570-0.299798-0.628000 | W11 best x1-x5; x6 lowered 0.643→0.628 to explore |
-| F8 | 0.159000-0.209000-0.127000-0.190000-0.775000-0.520000-0.299000-0.591000 | Trend from W12 new best — extrapolate W10→W11→W12 trajectory |
+### Week 13 (Module 24) — FINAL — Results In ✅
+| F | Submission | Result | Note |
+|---|------------|--------|------|
+| F1 | 0.635000-0.654000 | **0.33641** ✅ | NEW ALL-TIME BEST — +246% above W9! x1=0.635 found the true peak |
+| F2 | 0.722000-0.921380 | 0.4831 ❌ | Stochastic — W6 best (0.6478) stands |
+| F3 | 0.050000-0.969910-0.474761 | -0.0298 ❌ | W1 best (-0.011) still unbeaten after 13 weeks |
+| F4 | 0.358693-0.496383-0.626773-0.483600 | -5.585 ↑ | Not all-time best but best since W7 — centroid strategy worked |
+| F5 | 0.027000-0.990000-0.990000-0.990000 | **4039.88** ✅ | NEW ALL-TIME BEST — +388 pts from removing 0.98 cap |
+| F6 | 0.415859-0.378425-0.521334-0.722648-0.022901 | -0.3111 ❌ | W8 best (-0.2037) stands |
+| F7 | 0.232699-0.231503-0.351373-0.289969-0.290607-0.646623 | **3.1050** ✅ | NEW ALL-TIME BEST — score-weighted centroid |
+| F8 | 0.159000-0.209000-0.127000-0.190000-0.775000-0.520000-0.299000-0.591000 | 9.9676 ❌ | W12 best (9.9799) stands — trend didn't continue |
+
+**3/8 new all-time bests in the final week — CAPSTONE COMPLETE**
 
 ---
 
@@ -377,18 +379,18 @@ Each weekly notebook runs all 8 functions through a single parameterised functio
 
 ---
 
-### Per-Function Strategy Summary (Week 12 — current)
+### Final Per-Function Results Summary
 
-| Function | All-time Best | W13 Submission | Policy |
-|----------|-------------|---------------|--------|
-| F1 | **0.09715 (W9)** ⭐ | 0.635000-0.654000 | x2=0.654 kept; x1 shifted to clear duplicate |
-| F2 | 0.6478 (W6) | 0.704856-0.921380 | W6 exact — stochastic resampling |
-| F3 | -0.0107 (W1) | 0.050000-0.969910-0.474761 | W1 x2/x3 exact; x1 adjusted |
-| F4 | -0.1284 (W4) | 0.360000-0.500000-0.615000-0.480000 | W7/W8 best-recent region |
-| F5 | **3651.37 (W9)** ⭐ | 0.027000-0.980000-0.979500-0.979000 | W9 exact — lock in peak |
-| F6 | -0.2037 (W8) | 0.409346-0.360704-0.520000-0.718263-0.020264 | W8 best; x3 adjusted |
-| F7 | 3.1034 (W11) | 0.235451-0.238127-0.353968-0.271570-0.299798-0.628000 | W11 x1-x5; x6 explore lower |
-| F8 | **9.9799 (W12)** ⭐ | 0.159000-0.209000-0.127000-0.190000-0.775000-0.520000-0.299000-0.591000 | Trend continuation |
+| Function | All-time Best | Best Week | Final Strategy That Worked |
+|----------|-------------|-----------|--------------------------|
+| F1 | **0.33641** ⭐ | **W13** | x2=0.654 locked; x1=0.635 (not 0.6515!) found true peak |
+| F2 | 0.6478 | W6 | Stochastic — best draw at (0.7049, 0.9214) was W6 |
+| F3 | -0.0107 | W1 | x2=0.9699 + x3=0.4748 + x1≈0.02 — W1 result never beaten |
+| F4 | -0.1284 | W4 | Non-stationary; W4 region unreproducible — W7 region safer |
+| F5 | **4039.88** ⭐ | **W13** | Remove 0.98 cap on x2-x4; x1=0.027 ridge peak |
+| F6 | -0.2037 | W8 | x4=0.718, x5=0.020 critical; W8 result never beaten |
+| F7 | **3.1050** ⭐ | **W13** | Score-weighted centroid of W10/W11/W12 confirmed bests |
+| F8 | 9.9799 | W12 | Trend extrapolation W10→W11→W12; 4 consecutive new bests |
 
 ---
 
@@ -409,6 +411,9 @@ Each weekly notebook runs all 8 functions through a single parameterised functio
 | W11 | Manual overrides beat raw GP when empirical evidence is clear — F5 ridge peak at x1=0.027 outperformed GP's preference to push lower |
 | W12 | Ridge width: x3 deviation of just 0.016 (from 0.9795 to 0.963) caused 188-point drop in F5. Both x3 and x4 must stay at 0.979-0.980 on the ridge. |
 | W12 | x2 in F1 is an extremely narrow spike: x2=0.670 (Δ=+0.016 from optimal 0.654) crashed output from 0.097 to −0.003. Never deviate more than 0.001 in x2 for F1. |
+| W13 | Boundary caps can cost more than expected: removing the [0.02, 0.98] clip on F5's x2-x4 gained +388 points (+10.6%) in a single query. Always test at-boundary when a ridge is trending toward the edge. |
+| W13 | The true peak of F1 (0.33641) was never near 0.6515 — it was at x1=0.635. A 0.016 shift in x1 (not x2) tripled the all-time best. Even well-explored functions can have untested neighbourhoods. |
+| W13 | Score-weighted centroids (softmax weighting over confirmed-best observations) are a simple, powerful way to handle non-stationarity: instead of trusting one best point, weight all good points and let the centroid naturally drift toward the most reliable region. |
 
 ---
 
@@ -488,9 +493,19 @@ imperial-aiml-capstone/
 │   │   └── Module_21_Week10_Capstone.ipynb
 │   └── plots/
 │
-└── module-22/          ← Week 11: F7 (3.1034), F8 (9.9750) all-time bests
+├── module-22/          ← Week 11: F7 (3.1034), F8 (9.9750) all-time bests
+│   ├── notebooks/
+│   │   └── Module_22_Week11_Capstone.ipynb
+│   └── plots/
+│
+├── module-23/          ← Week 12: F8 (9.9799) all-time best
+│   ├── notebooks/
+│   │   └── Module_23_Week12_Capstone.ipynb
+│   └── plots/
+│
+└── module-24/          ← Week 13 FINAL: F1 (0.33641), F5 (4039.88), F7 (3.1050) NEW BESTS
     ├── notebooks/
-    │   └── Module_22_Week11_Capstone.ipynb
+    │   └── Module_24_Week13_Capstone.ipynb
     └── plots/
 ```
 
@@ -508,9 +523,9 @@ git clone https://github.com/divyabhanusri24/imperial-aiml-capstone.git
 pip install numpy matplotlib scikit-learn scipy
 ```
 
-3. Open the latest notebook:
+3. Open the final notebook:
 ```bash
-jupyter notebook module-22/notebooks/Module_22_Week11_Capstone.ipynb
+jupyter notebook module-24/notebooks/Module_24_Week13_Capstone.ipynb
 ```
 
 ---
